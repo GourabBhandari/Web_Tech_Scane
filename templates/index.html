@@ -3,77 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web TECh Analyzer[{(GB)}]</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        input[type="text"] {
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        input[type="submit"] {
-            padding: 10px;
-            font-size: 16px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-        .results {
-            margin-top: 20px;
-        }
-        .results ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .results li {
-            padding: 5px 0;
-        }
-        .results li strong {
-            display: inline-block;
-            width: 150px;
-        }
-        .logout {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
+    <title>Web Tech Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Web TECh Analyzer</h1>
+        <h1>Web Tech Scanner</h1>
         <form method="post">
-            <input type="text" name="url" placeholder="Enter URL to analyze">
-            <input type="submit" value="Analyze">
+            <input type="text" name="url" placeholder="Enter URL to Scanning">
+            <input type="submit" value="Search">
         </form>
         {% if result %}
             <div class="results">
-                <h2>Analysis Results</h2>
+                <h2>Web Tech Scanner</h2>
                 <ul>
                 {% for key, value in result.items() %}
-                    <li><strong>{{ key }}:</strong> {{ value }}</li>
+                    <li>
+                        <strong>{{ key }}:</strong>
+                        {% for tech in value.split(', ') %}
+                            {% if tech in tech_images %}
+                                <img src="{{ tech_images[tech] }}" alt="{{ tech }}" width="20" height="20">
+                            {% endif %}
+                            {{ tech }}
+                        {% endfor %}
+                    </li>
                 {% endfor %}
                 </ul>
             </div>
@@ -83,3 +36,4 @@
         </div>
     </div>
 </body>
+</html>
